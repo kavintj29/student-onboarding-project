@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: studentDB
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - "5432:5432"
+
+  service-b:
+    build: .
+    ports:
+      - "8083:8083"
+    depends_on:
+      - db
+
+  service-a:
+    image: kavinrajtj/servicea-serviceb:servicea
+    ports:
+      - "8081:5000"
+    depends_on:
+      - service-b

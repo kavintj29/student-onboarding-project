@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Data Generator</title>
+</head>
+<body>
+
+<h2>Student Data Generator</h2>
+
+<button onclick="loadData()">Generate</button>
+
+<h3 id="valid"></h3>
+<h3 id="invalid"></h3>
+
+<script>
+function loadData() {
+    fetch("/generate")
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("valid").innerText =
+                "Valid Records: " + data.valid_count;
+
+            document.getElementById("invalid").innerText =
+                "Invalid Records: " + data.invalid_count;
+        })
+        .catch(err => console.error(err));
+}
+</script>
+
+</body>
+</html>

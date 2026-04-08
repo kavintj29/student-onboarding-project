@@ -3,18 +3,17 @@ import time
 from validator import validate_csv
 import requests
 
-# 🔥 ADD HERE (TOP LEVEL)
 def send_data(data):
-    url = "http://localhost:8083/api/students"
+    url = "http://serviceb:8083/api/students" 
 
-    print("Sending data:", data[:2])   # DEBUG
+    print("Sending batch size:", len(data))  
 
-    for student in data:
-        try:
-            requests.post(url, json=student)
-        except Exception as e:
-            print("Error sending:", e)
+    try:
+        requests.post(url, json=data)   #send data in json
+    except Exception as e:
+        print("Error sending:", e)
 
+processed_files = set()
 
 def watch_folder():
     print("Watching folder...")
@@ -23,10 +22,12 @@ def watch_folder():
         files = os.listdir("data")
 
         for file in files:
-            print(f"Processing {file}")
+            if file not in processed_files:
+                print(f"Processing {file}")
 
-            valid_data, invalid_data = validate_csv(f"data/{file}")
+                valid_data, invalid_data = validate_csv(f"data/{file}")
+                send_data(valid_data)
 
-            send_data(valid_data)
+                processed_files.add(file)   
 
-        time.sleep(5)
+        time.sleep(7)

@@ -1,0 +1,5 @@
+com\example\sudentbctserviceb\StudentController.class
+com\example\sudentbctserviceb\SudentbctservicebApplication.class
+com\example\sudentbctserviceb\Studentservice.class
+com\example\sudentbctserviceb\StudentRepository.class
+com\example\sudentbctserviceb\model\Student.class
